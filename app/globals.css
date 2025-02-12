@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("https://wallpapers.com/images/hd/dark-sky-background-3500-x-2250-l2wxkhui44589wnz.jpg");
+  background-position: "center";
+  background-repeat: "no-repeat";
+}
