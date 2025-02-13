@@ -5,7 +5,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { editUserData } from "@/store/actions/users";
+import { UserData } from "@/types";
+import { Snackbar } from "@mui/material";
 
 interface Props {
   open: boolean;
@@ -15,14 +20,22 @@ interface Props {
 }
 
 export default function EditDialog(props: Props) {
+  const dispatch = useDispatch();
+
+  const { isEdit } = useSelector((state: RootState) => state.users);
   const { open, setOpen, title, description } = props;
+
+  const [toast, setToast] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [form, setForm] = useState({
-    email: "",
+  const [form, setForm] = useState<any>({
+    id: "",
+    recentlyActive: 0,
+    totalAverageWeightRatings: 0,
+    numberOfRents: 0,
   });
 
   const changeHandler = (
@@ -34,6 +47,35 @@ export default function EditDialog(props: Props) {
       [name]: value,
     });
   };
+
+  const submitHandler = async () => {
+    try {
+      const bodyData = {
+        ...form,
+        recentlyActive: Math.floor(
+          new Date(form?.recentlyActive).getTime() / 1000
+        ),
+      };
+      await dispatch(editUserData(bodyData as UserData) as any);
+      setToast(true);
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isEdit) {
+      const date = new Date(isEdit?.recentlyActive * 1000)
+        .toISOString()
+        .split("T")[0];
+
+      setForm({
+        ...isEdit,
+        recentlyActive: date,
+      });
+    }
+  }, [isEdit]);
 
   return (
     <>
@@ -51,8 +93,8 @@ export default function EditDialog(props: Props) {
             type="number"
             fullWidth
             variant="filled"
-            // value={form?.email}
-            // onChange={changeHandler}
+            value={form?.totalAverageWeightRatings}
+            onChange={changeHandler}
           />
           <TextField
             required
@@ -63,8 +105,8 @@ export default function EditDialog(props: Props) {
             type="number"
             fullWidth
             variant="filled"
-            // value={form?.email}
-            // onChange={changeHandler}
+            value={form?.numberOfRents}
+            onChange={changeHandler}
           />
           <TextField
             required
@@ -74,15 +116,25 @@ export default function EditDialog(props: Props) {
             type="date"
             fullWidth
             variant="filled"
-            value={null}
-            // onChange={changeHandler}
+            value={form?.recentlyActive}
+            onChange={changeHandler}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button type="submit" onClick={submitHandler}>
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={toast}
+        autoHideDuration={2000}
+        onClose={() => setToast(false)}
+        message="Success Edit User"
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
     </>
   );
 }

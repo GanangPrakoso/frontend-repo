@@ -1,5 +1,6 @@
 "use client";
 
+import { RootState } from "@/store";
 import {
   Box,
   Button,
@@ -9,8 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { ChangeEvent, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Login() {
+  const { isLoading } = useSelector((state: RootState) => state.users);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -26,6 +30,9 @@ export default function Login() {
     });
   };
 
+  const handleLogin = async () => {
+    //
+  };
   return (
     <Box
       sx={{
@@ -64,11 +71,10 @@ export default function Login() {
             variant="contained"
             color="primary"
             sx={{ mt: 2 }}
-            //   onClick={handleLogin}
-            //   disabled={loading}
+            onClick={handleLogin}
+            disabled={isLoading}
           >
-            {/* {loading ? "Logging in..." : "Login"} */}
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </Card>
       </Container>
