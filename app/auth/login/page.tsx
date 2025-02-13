@@ -10,15 +10,21 @@ import {
   Typography,
 } from "@mui/material";
 import { ChangeEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/apis/firebase";
+import { setIsLoading } from "@/store/slices/users";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const { isLoading } = useSelector((state: RootState) => state.users);
 
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState("");
 
   const changeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -31,7 +37,20 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    //
+    try {
+      dispatch(setIsLoading(true));
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        form?.email,
+        form?.password
+      );
+
+      const token = await userCredential.user.getIdToken();
+    } catch (error) {
+      setError("Invalid Credential");
+    } finally {
+      dispatch(setIsLoading(false));
+    }
   };
   return (
     <Box
@@ -65,7 +84,7 @@ export default function Login() {
             onChange={changeHandler}
             margin="normal"
           />
-          {/* {error && <Typography color="error">{error}</Typography>} */}
+          {error && <Typography color="error">{error}</Typography>}
           <Button
             fullWidth
             variant="contained"
