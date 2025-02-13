@@ -57,7 +57,7 @@ export default function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            EBUDDY
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

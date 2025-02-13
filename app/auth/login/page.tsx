@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/app/api/firebase";
@@ -39,8 +39,10 @@ export default function Login() {
     });
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     try {
+      e.preventDefault();
+
       dispatch(setIsLoading(true));
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -82,38 +84,40 @@ export default function Login() {
           <Typography variant="h4" textAlign="center" mb={2}>
             Login
           </Typography>
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            value={form?.email}
-            onChange={changeHandler}
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            type="password"
-            label="Password"
-            name="password"
-            value={form?.password}
-            onChange={changeHandler}
-            margin="normal"
-          />
-          {error && (
-            <Typography color="error" textAlign={"center"}>
-              {error}
-            </Typography>
-          )}
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{ mt: 2 }}
-            onClick={handleLogin}
-            disabled={isLoading || isValidForm}
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </Button>
+          <form onSubmit={handleLogin}>
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              value={form?.email}
+              onChange={changeHandler}
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              type="password"
+              label="Password"
+              name="password"
+              value={form?.password}
+              onChange={changeHandler}
+              margin="normal"
+            />
+            {error && (
+              <Typography color="error" textAlign={"center"}>
+                {error}
+              </Typography>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+              disabled={isLoading || isValidForm}
+            >
+              {isLoading ? "Logging in..." : "Login"}
+            </Button>
+          </form>
         </Card>
       </Container>
     </Box>

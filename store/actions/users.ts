@@ -8,6 +8,7 @@ export const fetchUserData = () => async (dispatch: Dispatch) => {
 
     const res = await fetch(process.env.API_URL + "/fetch-user-data", {
       method: "get",
+      credentials: "include",
     });
 
     if (!res.ok) {
@@ -32,6 +33,7 @@ export const editUserData = (value: UserData) => async (dispatch: Dispatch) => {
       {
         method: "put",
         body: JSON.stringify(value),
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
