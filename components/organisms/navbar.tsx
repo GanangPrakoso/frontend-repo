@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,20 +12,29 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useRouter } from "next/navigation";
+import { MouseEvent, useState } from "react";
 
 const pages = ["Home"];
 
 export default function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+  const router = useRouter();
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    router.push("/auth/login");
   };
 
   return (
@@ -118,7 +126,7 @@ export default function Navbar() {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <Button variant="contained" color="error">
+              <Button variant="contained" color="error" onClick={handleLogout}>
                 Logout
               </Button>
             </Tooltip>

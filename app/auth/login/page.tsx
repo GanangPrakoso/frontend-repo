@@ -12,11 +12,14 @@ import {
 import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/apis/firebase";
+import { auth } from "@/app/api/firebase";
 import { setIsLoading } from "@/store/slices/users";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const { isLoading } = useSelector((state: RootState) => state.users);
 
   const [form, setForm] = useState({
@@ -46,12 +49,24 @@ export default function Login() {
       );
 
       const token = await userCredential.user.getIdToken();
+
+      await fetch(`/api/auth`, {
+        method: "POST",
+        body: JSON.stringify({ token }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      router.push("/home");
     } catch (error) {
       setError("Invalid Credential");
     } finally {
       dispatch(setIsLoading(false));
     }
   };
+
+  const isValidForm = !form?.email || !form?.password;
   return (
     <Box
       sx={{
@@ -84,14 +99,18 @@ export default function Login() {
             onChange={changeHandler}
             margin="normal"
           />
-          {error && <Typography color="error">{error}</Typography>}
+          {error && (
+            <Typography color="error" textAlign={"center"}>
+              {error}
+            </Typography>
+          )}
           <Button
             fullWidth
             variant="contained"
             color="primary"
             sx={{ mt: 2 }}
             onClick={handleLogin}
-            disabled={isLoading}
+            disabled={isLoading || isValidForm}
           >
             {isLoading ? "Logging in..." : "Login"}
           </Button>
