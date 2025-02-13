@@ -3,7 +3,8 @@
 import { Box } from "@mui/material";
 import EditDialog from "@/components/organisms/edit-dialog";
 import { useState } from "react";
-import UserCard, { UserData } from "@/components/molecules/user-card";
+import { UserData } from "@/types";
+import UserCard from "@/components/molecules/user-card";
 
 const data = [
   {

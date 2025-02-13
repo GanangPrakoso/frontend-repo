@@ -5,13 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import EditIcon from "@mui/icons-material/Edit";
-
-export interface UserData {
-  id: string;
-  recentlyActive: number;
-  totalAverageWeightRatings: number;
-  numberOfRents: number;
-}
+import { UserData } from "@/types";
 
 interface Props {
   data: UserData;
