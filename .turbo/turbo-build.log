@@ -1,36 +1,0 @@
-
-
-> frontend-repo@0.1.0 build
-> next build
-
-[1G[0K   [1m[38;2;173;127;168m▲ Next.js 15.1.7[39m[22m
-   - Environments: .env
-
- [37m[1m [22m[39m Creating an optimized production build ...
- [32m[1m✓[22m[39m Compiled successfully
-[?25l [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G[?25h[31m[31m
-Failed to compile.[39m[39m
-[?25l [36m.[39m [2K[1G[?25h[31m
-./app/(protected)/home/page.tsx
-28:6  Warning: React Hook useEffect has a missing dependency: 'dispatch'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-32:6  Warning: React Hook useEffect has a missing dependency: 'dispatch'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-
-./app/api/auth/route.ts
-16:12  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-
-./app/auth/login/page.tsx
-64:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-
-./components/organisms/edit-dialog.tsx
-34:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-59:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-
-info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules[39m
-[?25l [36m.[39m [?25h[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m Lifecycle script `build` failed with error:
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mcode[39m [33m1[39m
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mpath[39m /Users/ganangprakoso/workworkwork/ebuddy/monorepo/apps/frontend-repo
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mworkspace[39m frontend-repo@0.1.0
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mlocation[39m /Users/ganangprakoso/workworkwork/ebuddy/monorepo/apps/frontend-repo
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m command failed
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mcommand[39m sh -c next build
-[1G[0K⠙[1G[0K
